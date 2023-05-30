@@ -8,10 +8,9 @@ from pathlib import Path
 
 import stanza
 
-import argostrain
-import argostrain.opennmtutils
-from argostrain import data, settings
-from argostrain.dataset import *
+import opennmtutils
+import data, settings
+from dataset import *
 
 
 def train(
@@ -30,7 +29,7 @@ def train(
     MAX_DATA_SIZE = 5 * (10 ** 7)
 
     # Check for existing checkpoints
-    checkpoints = argostrain.opennmtutils.get_checkpoints()
+    checkpoints = opennmtutils.get_checkpoints()
     if len(checkpoints) > 0:
         input("Warning: Checkpoints exist (enter to continue)")
 
@@ -132,7 +131,7 @@ def train(
     with open(settings.RUN_PATH / "metadata.json", "w") as metadata_file:
         metadata_file.write(metadata_json)
 
-    argostrain.data.prepare_data(settings.SOURCE_PATH, settings.TARGET_PATH)
+    data.prepare_data(settings.SOURCE_PATH, settings.TARGET_PATH)
 
     with open(Path("run/split_data/all.txt"), "w") as combined:
         with open(Path("run/split_data/src-train.txt")) as src:
@@ -162,7 +161,7 @@ def train(
     subprocess.run(["onmt_train", "-config", "config.yml"])
 
     # Average checkpoints
-    opennmt_checkpoints = argostrain.opennmtutils.get_checkpoints()
+    opennmt_checkpoints = opennmtutils.get_checkpoints()
     opennmt_checkpoints.sort()
     subprocess.run(
         [
@@ -231,3 +230,5 @@ def train(
     subprocess.run(["mv", model_dir + ".zip", package_path])
 
     print(f"Package saved to {str(package_path.resolve())}")
+
+train(from_code='ru', to_code='en', from_name='Russian', to_name='English', version='1.6', package_version='1.7', argos_version='1.8', data_exists=False)

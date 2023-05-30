@@ -9,8 +9,8 @@ from pathlib import Path
 from random import random, randrange
 from urllib import parse, request
 
-from argostrain import settings, utils
-from argostrain.utils import error, info, warning
+import settings, utils
+from utils import error, info, warning
 
 
 class IDataset:

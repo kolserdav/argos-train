@@ -4,8 +4,7 @@ import random
 import sys
 from functools import partial
 
-import argostrain
-from argostrain.dataset import *
+from dataset import *
 
 
 def prepare_data(source_data, target_data):
