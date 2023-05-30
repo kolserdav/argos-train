@@ -20,7 +20,9 @@ def prepare_data(source_data, target_data):
     VALID_SIZE = 2000
     assert len(source_data) > VALID_SIZE
 
-    os.mkdir("run/split_data")
+    split_data_path = "run/split_data"
+    if os.path.exists(split_data_path) is False:
+        os.mkdir(split_data_path)
 
     source_valid_file = open("run/split_data/src-val.txt", "w")
     source_valid_file.writelines(source_data[0:VALID_SIZE])

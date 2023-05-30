@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  rocm:
+    container_name: rocm
+    build:
+      context: ./
+      dockerfile: Dockerfile.rocm
+      args:
+        device: /dev/kfd
+        group-add: video 
+    volumes:
+      - ./:/home/app
+    logging:
+      options:
+        max-size: '12m'
+        max-file: '5'
+      driver: json-file
